@@ -42,7 +42,12 @@
 ;; Artifacts are saved as Emacs Lisp s-expressions (potentially with
 ;; circular structure) and exported to MultiMarkdown format reports.
 
-(require 'cl-lib)
+(if (>= emacs-major-version 24)
+	(require 'cl-lib)
+  (require 'cl)
+  (defalias 'cl-pairlis 'pairlis)
+  (defalias 'cl-find 'find)
+  (defalias 'cl-remove-if-not 'remove-if-not))
 
 ;;; Code:
 
@@ -235,7 +240,7 @@ and benefit."
 
 (defun describe-n9-story (role goal benefit)
   "Returns a sentence constructed from a story its ROLE, GOAL and BENEFIT."
-  (format "As a %s I want %s so that %s" role goal benefit))
+  (format "As a/an %s I/we want %s so that %s" role goal benefit))
 
 (defun filter-n9-story (story &rest keys)
   "Returns an alist containing only the conses of STORY matching KEYS."
@@ -307,7 +312,7 @@ identifying the product owner, such as an email address."
 (defun show-n9-story (story-number)
   "Displays story STORY-NUMBER from the current product as MultiMarkdown."
   (interactive "nStory number: ")
-  (print (mmd-write-story
+  (print (mmd-print-story
           (find-n9-story story-number (current-n9-product))) nil))
 
 (defun add-n9-story (role goal benefit)
@@ -384,9 +389,11 @@ PRIORITY."
                                        (n9-story-created story))))
       (princ (mmd-metadata (filter-n9-story story 'owner 'priority 'cost))))
     (princ (mmd-header-3 (format "Story %d" (n9-story-number story))))
+    (princ "\n")
     (princ (n9-story-description story))
     (princ "\n\n")
     (princ (mmd-header-4 "Acceptance criteria"))
+    (princ "\n")
     (princ (mmd-enum-list (n9-story-criteria story)))))
 
 (provide 'number-nine)

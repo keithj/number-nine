@@ -1,7 +1,7 @@
 
 # Synopsis #
 
-`No. 9` [^1] (alternatively, `number-nine` or `n9`) is an Emacs
+`No. 9` (alternatively, `number-nine` or `n9`) [^1] is an Emacs
 extension to aid the management of Scrum artifacts such as product and
 sprint backlogs. The artifacts may be created, manipulated saved,
 loaded and exported as
