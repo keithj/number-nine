@@ -1,5 +1,6 @@
 #1=((name . "number nine")
     (owner . #2="dev@deoxybyte.co.uk")
+    (definition-done "Public interface documented." "Committed into a VCS." "All acceptance criteria met.")
     (stories
      ((product . #1#)
       (owner . #2#)
